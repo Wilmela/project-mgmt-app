@@ -10,9 +10,9 @@ const ADD_CLIENTS = gql`
     }
   }
 `;
-const EDIT_CLIENT = gql`
-  mutation editClient($id: ID!, $name: String!, $email: String!, $phone: String!) {
-    editClient(id: $id, name: $name, email: $email, phone: $phone) {
+const UPDATE_CLIENT = gql`
+  mutation updateClient($id: ID!, $name: String!, $email: String!, $phone: String!) {
+    updateClient(id: $id, name: $name, email: $email, phone: $phone) {
       id
       name
       email
@@ -23,7 +23,7 @@ const EDIT_CLIENT = gql`
 
 const ADD_PROJECTS = gql`
   mutation addProject($name: String!, $description: String!, $clientId: ID!, $status: ProjectStatus!) {
-    addProject(name: $name, description: $description,clientId: $clientId, status: $status) {
+    addProject(name: $name, description: $description, clientId: $clientId, status: $status) {
       id
       name
       description
@@ -75,4 +75,4 @@ const DELETE_PROJECT = gql`
 
 
 
-export { ADD_CLIENTS, EDIT_CLIENT, ADD_PROJECTS, DELETE_CLIENT, DELETE_PROJECT, UPDATE_PROJECT };
+export { ADD_CLIENTS, UPDATE_CLIENT, ADD_PROJECTS, DELETE_CLIENT, DELETE_PROJECT, UPDATE_PROJECT };

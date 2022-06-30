@@ -86,7 +86,7 @@ const mutation = new GraphQLObjectType({
       },
     },
     //Edit a Client
-    editClient: {
+    updateClient: {
       type: ClientType,
       args:{ 
         id: {type : GraphQLID},

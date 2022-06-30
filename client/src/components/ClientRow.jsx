@@ -4,11 +4,9 @@ import {FaEdit} from 'react-icons/fa';
 import {FaSave} from 'react-icons/fa';
 import { useMutation } from '@apollo/client';
 import { DELETE_CLIENT } from '../mutations/mutations';
-import { EDIT_CLIENT } from '../mutations/mutations';
+import { UPDATE_CLIENT } from '../mutations/mutations';
 import { GET_CLIENTS } from '../queries/clientQueries';
 import {GET_PROJECTS} from '../queries/projectQueries';
-
-import {useNavigate} from 'react-router-dom'
 
 const ClientRow = ({id, name, email, phone}) => {
 
@@ -16,8 +14,6 @@ const ClientRow = ({id, name, email, phone}) => {
 
   const [client, setClient] = useState({clientId: id, clientName: name, clientEmail: email, clientPhone: phone});
   const {clientId, clientName, clientEmail, clientPhone} = client;
-
-  const navigate = useNavigate();
 
   const [deleteClient] = useMutation(DELETE_CLIENT,{
     variables:{id},
@@ -31,7 +27,7 @@ const ClientRow = ({id, name, email, phone}) => {
     // }
   });
 
-  const [editClient] = useMutation(EDIT_CLIENT, {
+  const [updateClient] = useMutation(UPDATE_CLIENT, {
     variables: { id: clientId, name: clientName, email: clientEmail, phone: clientPhone },
     refetchQueries: [{query: GET_CLIENTS}]
     },
@@ -44,25 +40,16 @@ const ClientRow = ({id, name, email, phone}) => {
       keyRow: cId,
     })
 
-    // setClient(cName, cEmail, cPhone);
   }
 
-  // const onCancel = () =>{
-  //   setIsEditable({statue: false, keyRow: null});
-  //   setClient({name: '', email: '', phone: ''})
-  // }
-
-  const updateClient = (e) => {
+  const onUpdate = (e) => {
    e.preventDefault();
 
    if (!(clientName, clientEmail, clientPhone)) {
      return alert("Fill form");
    }
-    editClient(clientId, clientName, clientEmail, clientPhone);
+    updateClient(clientId, clientName, clientEmail, clientPhone);
     setIsEditable({statue: false, keyRow: null})
-
-    navigate('/')
-
   }
 
   const handleChange = (e) =>{
@@ -93,7 +80,7 @@ const ClientRow = ({id, name, email, phone}) => {
         <td>
         {
             isEditable.statue && isEditable.keyRow === id ? (
-              <button type='button' onClick={updateClient} className='btn btn-primary btn-sm'><FaSave/></button>
+              <button type='button' onClick={onUpdate} className='btn btn-primary btn-sm'><FaSave/></button>
             ):(
               <button type='button' onClick={() => onEdit(id)} className='btn btn-secondary btn-sm'><FaEdit/></button>
             )
